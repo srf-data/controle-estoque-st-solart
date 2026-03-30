@@ -1,72 +1,196 @@
 # Sistema de Controle de Estoque e Precificação
 
-Sistema de apoio à gestão de estoque e precificação em um pequeno negócio de produção artesanal de velas. 
+**Versão:** 1.0  
+**Data:** 30/03/2026  
+
+Sistema web para controle de estoque, gerenciamento de produtos, matérias-primas, fornecedores, precificação e movimentações (entradas e saídas). Desenvolvido como Projeto Integrador (PI) da UNIVESP.
 
 ---
 
-## Objetivo
+## 📑 Histórico de Revisões
 
-O objetivo do projeto é substituir controles manuais (como planilhas) por uma aplicação web organizada, permitindo melhor controle e visualização do estoque.
-
----
-
-## Funcionalidades
-
-* Autenticação de usuários
-* Dashboard com gráficos
-* Cadastro de produtos
-* Cadastro de matérias-primas
-* Cadastro de fornecedores
-* Controle de entradas
-* Controle de saídas
-* Gestão de usuários
+| Versão | Data | Autor | Descrição |
+|--------|------|-------|----------|
+| 1.0 | 30/03/2026 | Equipe PI | Documentação inicial do sistema |
 
 ---
 
-## Tecnologias Utilizadas
+## Índice
 
-### Frontend
-
-* React.js
-* Vite
-* Tailwind CSS
-* Axios
-
-### Backend
-
-* Node.js
-* Express.js
-* JWT
-* bcrypt
-
-### Banco de Dados
-
-* PostgreSQL (Neon)
-* Prisma ORM
+- Introdução  
+- Visão Geral do Produto  
+- Arquitetura e Tecnologias  
+- Setup e Desenvolvimento  
+- Funcionalidades  
+- Estrutura do Projeto  
+- Configuração  
+- Deploy  
 
 ---
 
-## Estrutura do Projeto
+# 1. Introdução
 
+## 1.1 Propósito
+
+Este documento descreve a arquitetura, funcionalidades e processo de desenvolvimento do **Sistema de Controle de Estoque e Precificação**, com o objetivo de orientar a equipe na construção e evolução da aplicação.
+
+---
+
+## 1.2 Público-alvo
+
+- Desenvolvedores frontend e backend  
+- Equipe do Projeto Integrador (UNIVESP)  
+- Professores avaliadores  
+
+---
+
+## 1.3 Escopo
+
+O sistema contempla:
+
+- Controle de estoque  
+- Cadastro de produtos e matérias-primas  
+- Gestão de fornecedores  
+- Registro de entradas e saídas  
+- Precificação de produtos  
+- Dashboard com indicadores  
+
+---
+
+# 2. Visão Geral do Produto
+
+O sistema é uma aplicação web que centraliza o controle de estoque e precificação, substituindo planilhas manuais por uma solução digital organizada.
+
+Permite:
+
+- Visualização de dados em tempo real  
+- Controle de movimentações  
+- Gestão de recursos do estoque  
+- Definição de preços com base em dados  
+- Melhor tomada de decisão  
+
+---
+
+# 3. Arquitetura e Tecnologias
+
+## Frontend
+- React.js  
+- Vite  
+- React Router  
+- Axios  
+
+## Backend
+- Node.js  
+- Express.js  
+- JWT (autenticação)  
+- bcrypt  
+
+## Banco de Dados
+- PostgreSQL (Neon)  
+- Prisma ORM  
+
+## Interface e Estilo
+- Tailwind CSS  
+- Recharts  
+
+---
+
+# 4. Setup e Desenvolvimento
+
+## Pré-requisitos
+
+- Node.js 18+  
+- Git  
+
+---
+
+## Instalação
+
+```bash
+# Clonar repositório
+git clone https://github.com/srf-data/controle-estoque-st-solart.git
+
+# Entrar na pasta e instalar dependências
+npm install
+
+# Executar projeto
+npm run dev
 ```
-docs/
-```
 
----
+# Endereços
+Frontend: link
+Backend: link
 
-## Documentação
+# 5. Funcionalidades
+### Autenticação
+- Cadastro de usuários
+- Login com validação
+- Proteção de rotas
+### Dashboard
+- Indicadores de estoque
+- Gráficos de entradas e saídas
+- Visualização de dados em tempo real
+### Produtos
+- Cadastro de produtos
+- Listagem
+- Edição
+- Exclusão
+- Definição de preço
+### Matérias-Primas
+- Cadastro completo
+- Gerenciamento de dados
+- Integração com estoque
+### Fornecedores
+- Cadastro de fornecedores
+- Listagem e edição
+- Informações de contato
+### Entradas
+- Registro de entrada de estoque
+- Atualização automática de quantidade
+### Saídas
+- Registro de saída
+- Controle de estoque em tempo real
+### Usuários
+- Cadastro
+- Listagem
+- Edição
+- Exclusão
 
-* Levantamento de requisitos: `docs/requisitos.md`
+# 6. Estrutura do Projeto
+A denifir
 
----
+# 7. Configuração
+### Variáveis de Ambiente
+- Backend (.env)
+- DATABASE_URL=
+- JWT_SECRET=
+- PORT=3000
+- Frontend (.env)
+- VITE_API_URL=http://localhost:3000
+### Scripts
+# Desenvolvimento
+npm run dev
 
-## Deploy
+### Build
+npm run build
 
-* Frontend: Vercel
-* Backend: Render
-* Banco: Neon
+### Produção
+npm start
 
----
+# 8. Deploy
+Ambiente de Produção
+- Frontend: Vercel
+- Backend: Render
+- Banco: Neon
+
+### Checklist
+- [ ] Configurar variáveis de ambiente
+- [ ] Rodar migrations
+- [ ] Testar autenticação
+- [ ] Testar CRUD completo
+- [ ] Validar entradas e saídas
+- [ ] Validar dashboard
+<div><b>Status do Projeto</b>: Em desenvolvimento</div>
 
 ## Equipe
 
@@ -80,8 +204,3 @@ Projeto desenvolvido por equipe de 8 integrantes para o Projeto Integrador (PI) 
 - MARCO ANTONIO DE LIMA PRADO 
 - SHAYARE ROCHA FERREIRA
 
----
-
-## Status do Projeto
-
-Em desenvolvimento
