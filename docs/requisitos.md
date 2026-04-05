@@ -10,6 +10,7 @@ Data: 28/03/2026
 | Versão | Data       | Autor                       | Descrição                                                                      |
 | ------ | ---------- | --------------------------- | ------------------------------------------------------------------------------ |
 | 1.0    | 28/03/2026 | Equipe PI UNIVESP | Documento inicial de requisitos para sistema de controle de estoque e produção |
+| 1.1    | 05/04/2026 | Equipe PI UNIVESP | Adição da funcionalidade de recuperação de senha com envio de código por e-mail |
 
 ---
 
@@ -95,6 +96,8 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 * JWT (autenticacao)
 * bcrypt
 * Prisma ORM
+* Nodemailer (envio de e-mails)
+* Crypto (geração de códigos aleatórios)
 
 ### **Banco de Dados**
 
@@ -116,6 +119,13 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 * [ ] **RF-002**: O sistema deve permitir login com email e senha
 * [ ] **RF-003**: O sistema deve manter sessão autenticada com token JWT
 * [ ] **RF-004**: O sistema deve permitir logout
+* [ ] **RF-032**: O sistema deve permitir que o usuário solicite recuperação de senha informando o e-mail cadastrado
+* [ ] **RF-033**: O sistema deve gerar um código de verificação temporário para recuperação de senha
+* [ ] **RF-034**: O sistema deve enviar o código de verificação para o e-mail do usuário
+* [ ] **RF-035**: O sistema deve permitir que o usuário informe o código recebido para validação
+* [ ] **RF-036**: O sistema deve validar se o código está correto e dentro do prazo de expiração
+* [ ] **RF-037**: O sistema deve permitir que o usuário redefina sua senha após validação do código
+* [ ] **RF-038**: O sistema deve invalidar o código após uso ou expiração
 
 ---
 
@@ -191,6 +201,12 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 * [ ] **RN-006**: Usuários devem estar autenticados para acessar o sistema
 * [ ] **RN-007**: Senhas devem ser armazenadas criptografadas
 * [ ] **RN-008**: Exclusões podem ser lógicas (soft delete)
+* [ ] **RN-009**: O código de recuperação de senha deve ser único e aleatório com no mínimo e máximo de 6 digitos.
+* [ ] **RN-010**: O código de recuperação deve expirar em até 10 minutos após sua geração
+* [ ] **RN-011**: O código não pode ser reutilizado após validação
+* [ ] **RN-012**: A redefinição de senha só deve ser permitida após validação correta do código
+
+RN-013: A nova senha deve ser armazenada de forma criptografada (bcrypt)
 
 ---
 
@@ -203,6 +219,8 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 * [ ] **RNF-005 (Disponibilidade)**: Sistema deve ter alta disponibilidade
 * [ ] **RNF-006 (Escalabilidade)**: Sistema deve suportar crescimento de dados
 * [ ] **RNF-007 (Manutenibilidade)**: Código deve ser modular
+* [ ] **RNF-008 (Segurança)**: O envio de e-mails deve ser feito de forma segura utilizando autenticação SMTP
+* [ ] **RNF-009 (Segurança)**: O sistema deve limitar tentativas de validação de código para evitar ataques de força bruta
 
 ---
 
