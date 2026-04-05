@@ -10,7 +10,7 @@ Data: 28/03/2026
 | Versão | Data       | Autor                       | Descrição                                                                      |
 | ------ | ---------- | --------------------------- | ------------------------------------------------------------------------------ |
 | 1.0    | 28/03/2026 | Equipe PI UNIVESP | Documento inicial de requisitos para sistema de controle de estoque e produção |
-| 1.1    | 05/04/2026 | Equipe PI UNIVESP | Adição da funcionalidade de recuperação de senha com envio de código por e-mail |
+| 1.1    | 05/04/2026 | Shayare | Adição da funcionalidade de recuperação de senha com envio de código por e-mail |
 
 ---
 
