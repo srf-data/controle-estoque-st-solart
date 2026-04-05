@@ -12,6 +12,7 @@ Sistema web para controle de estoque, gerenciamento de produtos, matérias-prima
 | Versão | Data | Autor | Descrição |
 |--------|------|-------|----------|
 | 1.0 | 30/03/2026 | Equipe PI | Documentação inicial do sistema |
+| 1.1 | 05/04/2026 | Shayare | Adição de funcionalidade de recuperação de senha com envio de código por e-mail |
 
 ---
 
@@ -126,6 +127,12 @@ Backend: link
 - Cadastro de usuários
 - Login com validação
 - Proteção de rotas
+### Recuperação de Senha
+- Solicitação de redefinição de senha via e-mail  
+- Envio de código temporário para o e-mail cadastrado  
+- Validação do código informado pelo usuário  
+- Definição de nova senha com confirmação  
+- Expiração automática do código de verificação  
 ### Dashboard
 - Indicadores de estoque
 - Gráficos de entradas e saídas
