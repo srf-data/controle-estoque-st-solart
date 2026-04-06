@@ -116,7 +116,7 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 
 ## **4.1 Autenticação**
 
-* [ ] **RF-001**: O sistema deve permitir cadastro de usuário com nome, email e senha
+* [ ] **RF-001**: O sistema deve permitir cadastro de usuário com nome, email e senha apenas dentro da aplicação
 * [ ] **RF-002**: O sistema deve permitir login com email e senha
 * [ ] **RF-003**: O sistema deve manter sessão autenticada com token JWT
 * [ ] **RF-004**: O sistema deve permitir logout
@@ -143,7 +143,7 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 ## **4.3 Produtos**
 
 * [ ] **RF-008**: O sistema deve permitir cadastrar produto
-* [ ] **RF-009**: O produto deve conter nome, descrição, preço e quantidade
+* [ ] **RF-009**: O produto deve conter Código, Nome do Produto, Receita (Cálculo), Quantidade Cadastrada, Custo Produto, Preco Venda
 * [ ] **RF-010**: O sistema deve listar produtos
 * [ ] **RF-011**: O sistema deve permitir editar produto
 * [ ] **RF-012**: O sistema deve permitir excluir produto
@@ -161,12 +161,13 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 * [ ] **RF-016**: O sistema deve permitir excluir matéria-prima
 * [ ] **RF-044**: O sistema deve exibir a coluna "Fornecedor" na tabela de matérias-primas
 * [ ] **RF-045**: O sistema deve destacar visualmente, na tela de matérias-primas, os insumos que estiverem com estoque zerado e com baixo estoque.
+* [ ] **RF-049**: Os campos da tabela devem ser: Código, Matéria-Prima, Fornecedor, Unidade, Custo, Estoque, Foto
 
 ---
 
 ## **4.5 Fornecedores**
 
-* [ ] **RF-017**: O cadastro e a edição de fornecedores devem ser realizados via pop-up, contendo os seguintes campos: Razão, Nome, CNPJ, Cidade, Estado e Contato
+* [ ] **RF-017**: O cadastro e a edição de fornecedores devem ser realizados via pop-up, contendo os seguintes campos: Código, Razão, Nome, CNPJ, Cidade, Estado e Contato
 * [ ] **RF-018**: O fornecedor deve conter nome, contato e informações adicionais
 * [ ] **RF-019**: O sistema deve listar fornecedores
 * [ ] **RF-021**: O sistema deve permitir excluir fornecedor
