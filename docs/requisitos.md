@@ -1,7 +1,7 @@
 # **Documento de Requisitos: Controle de Estoque e Precificação**
 
-Versao: 1.0
-Data: 28/03/2026
+Versao: 1.3
+Data: 12/04/2026
 
 ---
 
@@ -12,6 +12,7 @@ Data: 28/03/2026
 | 1.0    | 28/03/2026 | Equipe PI UNIVESP | Documento inicial de requisitos para sistema de controle de estoque e produção |
 | 1.1    | 05/04/2026 | Shayare | Adição da funcionalidade de recuperação de senha com envio de código por e-mail |
 | 1.2    | 06/04/2026 | Shayare | Adição de pop-ups de cadastro/edição, regras de validação de insumos, detalhamento de campos em tabelas (saídas, fornecedores, matérias-primas) e novos indicadores de dashboard |
+| 1.3    | 12/04/2026 | Shayare | Atualização de UI/UX (notificações flutuantes, paginação padrão, novo fluxo de exclusão), conversão inteligente de unidades, efeito cascata na produção, bloqueio estrito de estoque negativo e correções de renderização. |
 
 ---
 
@@ -128,6 +129,11 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 * [ ] **RF-037**: O sistema deve permitir que o usuário redefina sua senha após validação do código
 * [ ] **RF-038**: O sistema deve invalidar o código após uso ou expiração
 
+## 4.1 UI/UX e Tabelas (Requisitos Gerais)
+* [ ] **RF-050**: O sistema deve exibir notificações flutuantes informando o sucesso ou erro de ações. As notificações devem desaparecer automaticamente após 3 segundos.
+* [ ] **RF-051**: A exclusão de qualquer registro não deve possuir um botão direto nas tabelas principais. O usuário deve primeiro acessar o pop-up de "Editar" e utilizar o botão de confirmação secundária ("Sim, Excluir") localizado no final do painel.
+* [ ] **RF-052**: Todas as tabelas do sistema (incluindo a de Entradas) devem utilizar um componente de paginação padronizado com botões numéricos clicáveis [ 1 ] [ 2 ] [ ... ].
+
 ---
 
 ## **4.2 Dashboard**
@@ -150,6 +156,8 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 * [ ] **RF-041**: Na tela de gestão, a coluna "Receita (Cálculo)" deve abrir um pop-up detalhando o cálculo originado na tela de "Entrada"
 * [ ] **RF-042**: O botão "Novo Registro" deve abrir um pop-up para a adição de novos produtos
 * [ ] **RF-043**: Dentro do pop-up de "Novo Registro", o sistema deve exibir uma lista de insumos pré-cadastrados para seleção
+* [ ] **RF-053**: O pop-up de "Receita (Cálculo)" deve carregar os dados em tempo real com base nos insumos selecionados pelo usuário, exibindo o "Custo de Produção Total" já recalculado automaticamente.
+* [ ] **RF-054**: O sistema deve exibir as informações de estoque e consumo sempre acompanhadas de suas respectivas unidades textuais e suporte a visibilidade fracionária com decimais em todas as colunas de estoque e dropdowns.
 
 ---
 
@@ -180,6 +188,7 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 * [ ] **RF-023**: A entrada deve conter quantidade, data e fornecedor
 * [ ] **RF-024**: O sistema deve atualizar automaticamente o estoque
 * [ ] **RF-046**: O sistema deve permitir a edição de registros de entrada através de um pop-up que exibe a lista de insumos e o nome do fornecedor
+* [ ] **RF-055**: Ao registrar uma entrada do tipo "Produção Própria" para um produto, o sistema deve buscar a receita do modelo, multiplicar os insumos pela quantidade produzida e deduzir automaticamente estes insumos do inventário global (Efeito Cascata).
 
 ---
 
@@ -189,6 +198,7 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 * [ ] **RF-026**: A saida deve conter quantidade e data
 * [ ] **RF-027**: O sistema deve reduzir automaticamente o estoque
 * [ ] **RF-047**: A tela de saídas deve conter uma tabela com as seguintes colunas: Ordem, Cliente, Produto, Quantidade, Total e Data
+* [ ] **RF-056**: No formulário de "Baixa de Insumo", o sistema deve fornecer uma seleção de "Unidade Utilizada", permitindo saídas avulsas modulares e declaração de gasto fracionário exato (ex: em ml) de um estoque maior.
 
 ---
 Requisito Geral (Tabelas)
@@ -223,6 +233,9 @@ Requisito Geral (Tabelas)
 * [ ] **RN-015**: Caso o usuário tente inserir uma quantidade maior do que a disponível no estoque, o sistema deve bloquear a ação e exibir uma mensagem de erro ("Quantidade insuficiente de insumo").
 * [ ] **RN-016**: O sistema não deve permitir a inserção de quantidades negativas em nenhum campo de insumo ou produto.
 * [ ] **RN-017**: A tela de matérias-primas deve exibir notificações claras em caso de erro de usuário ou de quantidade excedida durante as movimentações e edições.
+* [ ] **RN-018**: O saldo de estoque não pode ser editado manualmente. Qualquer alteração deve ser registrada como uma Entrada ou Saída para garantir o histórico.
+* [ ] **RN-019**: O sistema faz a conversão automática de unidades (ex: de Litro para ml, Quilo para grama), permitindo o abatimento exato de frações nas receitas sem gerar erros.
+* [ ] **RN-020**: Trava rigorosa do sistema. Nenhuma saída ou produção será permitida se o resultado deixar o estoque menor que zero.
 
 ---
 
@@ -237,6 +250,7 @@ Requisito Geral (Tabelas)
 * [ ] **RNF-007 (Manutenibilidade)**: Código deve ser modular
 * [ ] **RNF-008 (Segurança)**: O envio de e-mails deve ser feito de forma segura utilizando autenticação SMTP
 * [ ] **RNF-009 (Segurança)**: O sistema deve limitar tentativas de validação de código para evitar ataques de força bruta
+* [ ] **RNF-010 (Semântica e UI limpa)**: Exigência do uso de tags HTML corretas (como <button>) em elementos clicáveis para evitar bugs visuais, como bordas soltas ou focos residuais na interface.
 
 ---
 
