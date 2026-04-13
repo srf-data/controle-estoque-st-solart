@@ -13,6 +13,8 @@ Sistema web para controle de estoque, gerenciamento de produtos, matérias-prima
 |--------|------|-------|----------|
 | 1.0 | 30/03/2026 | Equipe PI | Documentação inicial do sistema |
 | 1.1 | 05/04/2026 | Shayare | Adição de funcionalidade de recuperação de senha com envio de código por e-mail |
+| 1.2 | 06/04/2026 | Shayare | Adição de pop-ups de cadastro/edição, regras de validação de insumos, detalhamento de tabelas e novos indicadores de dashboard |
+| 1.3 | 12/04/2026 | Shayare | Melhorias de UI/UX, correção de unidades, baixa automática de insumos (efeito cascata), conversor de medidas e travas de estoque |
 
 ---
 
@@ -137,31 +139,52 @@ Backend: link
 - Indicadores de estoque
 - Gráficos de entradas e saídas
 - Visualização de dados em tempo real
+- Exibição da quantidade total de itens cadastrados (insumos + produtos).
+- Indicadores visuais específicos e destaques para "Insumos com Estoque Mínimo" e "Estoque Zerado".
 ### Produtos
 - Cadastro de produtos
 - Listagem
 - Edição
 - Exclusão
 - Definição de preço
+- Criação via pop-up de "Novo Registro" com lista de seleção dinâmica de insumos.
+- Pop-up de "Receita (Cálculo)" carregando dados e custos de produção em tempo real.
+- Exibição padronizada de valores fracionários vinculados às suas unidades de medida (ex: 0,9 L, 100 ml, 5,4 Kg).
 ### Matérias-Primas
 - Cadastro completo
 - Gerenciamento de dados
 - Integração com estoque
+- Cadastro e edição integrados via pop-ups (relacionando Fornecedor, Unidade de Medida, Custo Unitário e Estoque Inicial).
+- Destaque visual na tabela para itens com estoque crítico.
 ### Fornecedores
 - Cadastro de fornecedores
 - Listagem e edição
 - Informações de contato
+- Formulário de cadastro/edição via pop-up com campos detalhados (Razão, Nome, CNPJ, Cidade, Estado e Contato).
 ### Entradas
 - Registro de entrada de estoque
 - Atualização automática de quantidade
+- Registro de matérias-primas vinculadas por fornecedor com edição via pop-up.
+- Efeito Cascata (Produção Própria): Ao registrar a produção de um item, o sistema lê a receita e deduz os insumos automaticamente do estoque global.
 ### Saídas
 - Registro de saída
 - Controle de estoque em tempo real
+- Tabela com detalhamento de Ordem, Cliente, Produto, Quantidade, Total e Data.
+- Baixas Avulsas Modulares: Opção de selecionar a "Unidade Utilizada" para declarar gastos fracionários exatos (ex: baixar ml de um estoque em Litros).
 ### Usuários
 - Cadastro
 - Listagem
 - Edição
 - Exclusão
+### UI/UX e Navegação
+- **Notificações Flutuantes:** Banners de feedback sutis no topo da tela que desaparecem após 3 segundos.
+- **Exclusão Segura:** Remoção de botões de exclusão direta nas tabelas; a exclusão agora é confirmada apenas dentro da tela de "Editar" para evitar cliques acidentais.
+- **Paginação Padronizada:** Todas as tabelas operam em um sistema unificado numérico [ 1 ] [ 2 ] [ ... ].
+- **Acessibilidade Visual:** Correção de focos residuais utilizando semântica estrita HTML (`<button>`) em elementos interativos.
+### Regras de Negócio e Automação
+- **Bloqueio de Estoque Falso:** O campo "Estoque" é de leitura bloqueada em edições manuais. Alterações de quantidade exigem registro formal em entradas/saídas para garantir rastreabilidade.
+- **Motor Conversor de Receitas:** Inteligência que processa unidades diferentes (ex: Litro para ml, Quilo para gramas) para abater frações exatas sem gerar falsos erros de quantidade.
+- **Travas Anti-Quebra (Bloqueio Fatal):** O sistema impede e barra imediatamente movimentações (vendas ou produções) que resultem em estoque negativo (abaixo de zero).
 
 # 6. Estrutura do Projeto
 A denifir
