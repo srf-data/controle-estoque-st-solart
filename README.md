@@ -197,15 +197,6 @@ A denifir
 - PORT=3000
 - Frontend (.env)
 - VITE_API_URL=http://localhost:3000
-### Scripts
-# Desenvolvimento
-npm run dev
-
-### Build
-npm run build
-
-### Produção
-npm start
 
 # 8. Deploy
 Ambiente de Produção
