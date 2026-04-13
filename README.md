@@ -111,7 +111,7 @@ Permite:
 
 ```bash
 # Clonar repositório
-git clone https://github.com/srf-data/controle-estoque-st-solart.git
+git clone https://github.com/srf-data/App_St.git
 
 # Entrar na pasta e instalar dependências
 npm install
