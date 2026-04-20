@@ -12,7 +12,8 @@ Data: 12/04/2026
 | 1.0    | 28/03/2026 | Equipe PI UNIVESP | Documento inicial de requisitos para sistema de controle de estoque e produção |
 | 1.1    | 05/04/2026 | Shayare | Adição da funcionalidade de recuperação de senha com envio de código por e-mail |
 | 1.2    | 06/04/2026 | Shayare | Adição de pop-ups de cadastro/edição, regras de validação de insumos, detalhamento de campos em tabelas (saídas, fornecedores, matérias-primas) e novos indicadores de dashboard |
-| 1.3    | 12/04/2026 | Shayare | Atualização de UI/UX (notificações flutuantes, paginação padrão, novo fluxo de exclusão), conversão inteligente de unidades, efeito cascata na produção, bloqueio estrito de estoque negativo e correções de renderização. |
+| 1.3    | 12/04/2026 | Shayare | Atualização de UI/UX (notificações flutuantes, paginação padrão, novo fluxo de exclusão), conversão inteligente de unidades, efeito cascata na produção, bloqueio estrito de estoque negativo e correções de renderização |
+| 1.4    | 19/04/2026 | Shayare, Marco | Implementação de persistência de login, configuração de envio de e-mails reais (Gmail), validações de formulário, prevenção de duplos cliques e segurança de repositório |
 
 ---
 
@@ -128,11 +129,16 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 * [ ] **RF-036**: O sistema deve validar se o código está correto e dentro do prazo de expiração
 * [ ] **RF-037**: O sistema deve permitir que o usuário redefina sua senha após validação do código
 * [ ] **RF-038**: O sistema deve invalidar o código após uso ou expiração
+* [ ] **RF-057**: O sistema deve utilizar o armazenamento local do navegador (LocalStorage) para persistir o token de sessão do usuário, garantindo que ele continue logado mesmo após atualizações da página (refresh).
+* [ ] **RF-058**: O envio dos códigos de recuperação de senha deve ser realizado por meio de uma integração com uma conta de e-mail real (Gmail).
+* [ ] **RF-059**: O layout do e-mail de recuperação deve ser focado em design limpo e tipográfico, garantindo a legibilidade e a exibição correta do branding ("st.solart") em qualquer dispositivo, contornando bloqueios de imagens.
 
 ## 4.1 UI/UX e Tabelas (Requisitos Gerais)
 * [ ] **RF-050**: O sistema deve exibir notificações flutuantes informando o sucesso ou erro de ações. As notificações devem desaparecer automaticamente após 3 segundos.
 * [ ] **RF-051**: A exclusão de qualquer registro não deve possuir um botão direto nas tabelas principais. O usuário deve primeiro acessar o pop-up de "Editar" e utilizar o botão de confirmação secundária ("Sim, Excluir") localizado no final do painel.
 * [ ] **RF-052**: Todas as tabelas do sistema (incluindo a de Entradas) devem utilizar um componente de paginação padronizado com botões numéricos clicáveis [ 1 ] [ 2 ] [ ... ].
+* [ ] **RF-060**: O sistema deve validar ativamente os dados inseridos em formulários, exigindo formatos padronizados (ex: e-mails contendo @ e domínio) e bloqueando o envio de senhas em branco.
+* [ ] **RF-061**: O sistema deve implementar um estado de processamento (isProcessing) que desativa visualmente e funcionalmente os botões de envio durante o carregamento de uma requisição, prevenindo cliques acidentais duplicados.
 
 ---
 
@@ -251,6 +257,9 @@ Requisito Geral (Tabelas)
 * [ ] **RNF-008 (Segurança)**: O envio de e-mails deve ser feito de forma segura utilizando autenticação SMTP
 * [ ] **RNF-009 (Segurança)**: O sistema deve limitar tentativas de validação de código para evitar ataques de força bruta
 * [ ] **RNF-010 (Semântica e UI limpa)**: Exigência do uso de tags HTML corretas (como <button>) em elementos clicáveis para evitar bugs visuais, como bordas soltas ou focos residuais na interface.
+* [ ] **RNF-011** (Segurança de Credenciais): Informações sensíveis da aplicação (como senhas de e-mail, tokens e URLs de banco de dados) devem ser isoladas estritamente em arquivos de variáveis de ambiente (.env) para testes.
+* [ ] **RNF-012** (Segurança de Repositório): O sistema de versionamento (GitHub) deve ser configurado com restrições (via .gitignore) para bloquear o envio e a exposição pública dos arquivos de configuração local (.env).
+* [ ] **RNF-013** (Homologação e Testes): O ambiente de desenvolvimento deve manter uma base de dados local mapeada (ex: usuários de teste) para viabilizar a validação constante do fluxo de login e recuperação real antes de enviar para a produção.
 
 ---
 
