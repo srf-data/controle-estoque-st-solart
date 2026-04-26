@@ -1,7 +1,7 @@
 # **Documento de Requisitos: Controle de Estoque e Precificação**
 
-Versao: 1.3
-Data: 12/04/2026
+Versao: 1.5
+Data: 26/04/2026
 
 ---
 
@@ -13,7 +13,8 @@ Data: 12/04/2026
 | 1.1    | 05/04/2026 | Shayare | Adição da funcionalidade de recuperação de senha com envio de código por e-mail |
 | 1.2    | 06/04/2026 | Shayare | Adição de pop-ups de cadastro/edição, regras de validação de insumos, detalhamento de campos em tabelas (saídas, fornecedores, matérias-primas) e novos indicadores de dashboard |
 | 1.3    | 12/04/2026 | Shayare | Atualização de UI/UX (notificações flutuantes, paginação padrão, novo fluxo de exclusão), conversão inteligente de unidades, efeito cascata na produção, bloqueio estrito de estoque negativo e correções de renderização |
-| 1.4    | 19/04/2026 | Shayare, Marco | Implementação de persistência de login, configuração de envio de e-mails reais (Gmail), validações de formulário, prevenção de duplos cliques e segurança de repositório |
+| 1.4    | 19/04/2026 | Marco, Shayare | Implementação de persistência de login, configuração de envio de e-mails reais (Gmail), validações de formulário, prevenção de duplos cliques e segurança de repositório |
+| 1.5    | 23/04/2026 - 26/04/2026 | Isaque, Shayare | Migração para PostgreSQL (Neon), Prisma ORM, Gestão de imagens em Base64, cálculo inteligente de custos/conversão universal, novos campos financeiros (Comissão e Desconto) e ajustes de segurança e sessão. |
 
 ---
 
@@ -104,7 +105,7 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 
 ### **Banco de Dados**
 
-* PostgreSQL
+* PostgreSQL (hospedado no Neon)
 
 ### **Hospedagem**
 
@@ -132,6 +133,9 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 * [ ] **RF-057**: O sistema deve utilizar o armazenamento local do navegador (LocalStorage) para persistir o token de sessão do usuário, garantindo que ele continue logado mesmo após atualizações da página (refresh).
 * [ ] **RF-058**: O envio dos códigos de recuperação de senha deve ser realizado por meio de uma integração com uma conta de e-mail real (Gmail).
 * [ ] **RF-059**: O layout do e-mail de recuperação deve ser focado em design limpo e tipográfico, garantindo a legibilidade e a exibição correta do branding ("st.solart") em qualquer dispositivo, contornando bloqueios de imagens.
+* [ ] **RF-062**: O sistema deve realizar logout automático (encerrar sessão) imediatamente caso o usuário delete a própria conta.
+* [ ] **RF-063**: O sistema deve manter proteção estrita de identidade, bloqueando qualquer redirecionamento (fallback) para contas de administrador caso o usuário logado não seja encontrado.
+* [ ] **RF-064**: Os campos de "Data de Cadastro" e "Último Acesso" nas listagens de usuários devem exibir formato detalhado contendo horas e minutos (HH:mm).
 
 ## 4.1 UI/UX e Tabelas (Requisitos Gerais)
 * [ ] **RF-050**: O sistema deve exibir notificações flutuantes informando o sucesso ou erro de ações. As notificações devem desaparecer automaticamente após 3 segundos.
@@ -164,6 +168,7 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 * [ ] **RF-043**: Dentro do pop-up de "Novo Registro", o sistema deve exibir uma lista de insumos pré-cadastrados para seleção
 * [ ] **RF-053**: O pop-up de "Receita (Cálculo)" deve carregar os dados em tempo real com base nos insumos selecionados pelo usuário, exibindo o "Custo de Produção Total" já recalculado automaticamente.
 * [ ] **RF-054**: O sistema deve exibir as informações de estoque e consumo sempre acompanhadas de suas respectivas unidades textuais e suporte a visibilidade fracionária com decimais em todas as colunas de estoque e dropdowns.
+* [ ] **RF-065**: O formulário de cadastro de produtos deve incluir o campo de "Comissão (%)".
 
 ---
 
@@ -202,9 +207,11 @@ Objetivo principal: substituir controles manuais (planilhas) por uma solução o
 
 * [ ] **RF-025**: O sistema deve registrar saida de produto
 * [ ] **RF-026**: A saida deve conter quantidade e data
-* [ ] **RF-027**: O sistema deve reduzir automaticamente o estoque
+* [ ] **RF-027**: O sistema deve reduzir automaticamente o estoque  
 * [ ] **RF-047**: A tela de saídas deve conter uma tabela com as seguintes colunas: Ordem, Cliente, Produto, Quantidade, Total e Data
 * [ ] **RF-056**: No formulário de "Baixa de Insumo", o sistema deve fornecer uma seleção de "Unidade Utilizada", permitindo saídas avulsas modulares e declaração de gasto fracionário exato (ex: em ml) de um estoque maior.
+* [ ] **RF-066**: O registro de Saídas deve incluir o campo "Desconto (R$)", com o sistema calculando e abatendo o Valor Total de forma automática.
+* [ ] **RF-067**: O sistema deve permitir a edição de registros de Saídas (tanto de produtos quanto de insumos) diretamente na tabela, atualizando o saldo do estoque em tempo real.
 
 ---
 Requisito Geral (Tabelas)
@@ -217,6 +224,11 @@ Requisito Geral (Tabelas)
 * [ ] **RF-029**: O sistema deve listar usuários
 * [ ] **RF-030**: O sistema deve permitir editar usuários
 * [ ] **RF-031**: O sistema deve permitir excluir usuários
+
+## **4.9 Gestão de Imagens**
+
+* [ ] **RF-068**: O servidor deve aceitar uploads de arquivos (payload) de até 50MB.
+* [ ] **RF-069**: As tabelas não devem exibir miniaturas circulares de imagens; em vez disso, devem apresentar um ícone de "seta diagonal" que, ao ser clicado, expande a foto em seu tamanho real.
 
 ---
 
@@ -242,6 +254,10 @@ Requisito Geral (Tabelas)
 * [ ] **RN-018**: O saldo de estoque não pode ser editado manualmente. Qualquer alteração deve ser registrada como uma Entrada ou Saída para garantir o histórico.
 * [ ] **RN-019**: O sistema faz a conversão automática de unidades (ex: de Litro para ml, Quilo para grama), permitindo o abatimento exato de frações nas receitas sem gerar erros.
 * [ ] **RN-020**: Trava rigorosa do sistema. Nenhuma saída ou produção será permitida se o resultado deixar o estoque menor que zero.
+* [ ] **RN-021**: O custo de produção de um produto deve ser calculado fracionando o valor do insumo proporcionalmente à unidade utilizada (ex: calculando o gasto em ml de um insumo comprado em Litro).
+* [ ] **RN-022**: A sugestão de preço de venda gerada pelo sistema deve obrigatoriamente considerar o cálculo da Margem de Lucro somado às taxas cadastradas de Comissão.
+* [ ] **RN-023**: Ao editar ou excluir um registro de Entrada ou Saída, o sistema deve realizar a compensação automática, devolvendo ou retirando a quantidade exata do estoque global para evitar furos no inventário.
+* [ ] **RN-024**: O sistema deve aplicar conversão proporcional automática em todas as operações matemáticas que envolvam mudanças de unidade de massa e volume (L ↔ ml e kg ↔ g).
 
 ---
 
@@ -260,6 +276,10 @@ Requisito Geral (Tabelas)
 * [ ] **RNF-011** (Segurança de Credenciais): Informações sensíveis da aplicação (como senhas de e-mail, tokens e URLs de banco de dados) devem ser isoladas estritamente em arquivos de variáveis de ambiente (.env) para testes.
 * [ ] **RNF-012** (Segurança de Repositório): O sistema de versionamento (GitHub) deve ser configurado com restrições (via .gitignore) para bloquear o envio e a exposição pública dos arquivos de configuração local (.env).
 * [ ] **RNF-013** (Homologação e Testes): O ambiente de desenvolvimento deve manter uma base de dados local mapeada (ex: usuários de teste) para viabilizar a validação constante do fluxo de login e recuperação real antes de enviar para a produção.
+* [ ] **RNF-014** (Banco de Dados e Infraestrutura): O sistema deve utilizar um banco de dados relacional de alta performance (PostgreSQL hospedado no Neon) para garantir integridade, disponibilidade em nuvem e proteção dos dados contra perdas locais.
+* [ ] **RNF-015** (Persistência ORM): Todas as transações com o banco de dados devem ser gerenciadas exclusivamente via Prisma ORM para garantir segurança e integridade referencial nas operações em cascata.
+* [ ] **RNF-016** (Armazenamento de Imagens): O banco de dados deve ser configurado para suportar strings de grande volume (tipo Text) a fim de salvar imagens convertidas em formato Base64 sem corrompimento.
+* [ ] **RNF-017** (Clean Code e Manutenibilidade): O código enviado para o ambiente de produção deve estar limpo, com rotinas de faxina que removam comentários de desenvolvimento e logs de debug do console, visando a otimização de performance.
 
 ---
 
